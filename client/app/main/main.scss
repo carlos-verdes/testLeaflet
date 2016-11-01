@@ -38,8 +38,8 @@ html|* > svg {
 #mapid { 
   height: 1000px; 
   -webkit-transform: rotateX(-45deg);
-  transform:rotateX(-45deg);
-  margin: 0px;
+//  transform:rotateX(-45deg);
+ // margin: 0px;
   //overflow:visible;
 }
 
@@ -79,7 +79,7 @@ html|* > svg {
 
 
 #mapcontainer {
-  perspective:1200;
+  //perspective:1200;
   padding: 0;
   position: relative;
   top: -100px;

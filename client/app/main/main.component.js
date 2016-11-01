@@ -4,7 +4,7 @@ import routing from './main.routes';
 
 
 var SourceColor = 'blue';
-var TargetColor = 'yellow';
+var TargetColor = 'red';
 
 
 var sourceMoreThan10 = {
@@ -38,6 +38,22 @@ var sourceAirportDubai = {
   max: 1672
 };
 
+var sourceAirportDubaiHome = {
+  file: 'commuting-airport-dubai-home.json',
+  sum: 821456,
+  count: 461,
+  min: 11,
+  max: 1672
+};
+
+var sourceAirportDubaiWork = {
+  file: 'commuting-airport-dubai-work.json',
+  sum: 821456,
+  count: 461,
+  min: 11,
+  max: 1672
+};
+
 
 var minJourneyWeigth = 1;
 var maxJourneyWeigth = 60;
@@ -47,9 +63,9 @@ var showZones = false;
 var AbuDabhiBounds = [[24.619602, 54.153324],[24.259533, 54.830351]]
 var DubaiBounds = [[25.314461, 55.042603],[24.983172, 55.567200]];
 var testBounds = [[25.104875594635896, 55.1872444152832], [25.066630150515678, 55.25693893432617]];
-var mapBounds = AbuDabhiBounds;
+var mapBounds = DubaiBounds;
 
-var sourceFile = sourceMoreThan50;
+var sourceFile = sourceAirportDubai;
 
 export class MainController {
 
@@ -139,7 +155,7 @@ export class MainController {
 
     this.mymap = L.map('mapid', {
       inertia: false
-    }).fitBounds(mapBounds);
+    }).fitBounds(mapBounds, { padding: [10, 50] });
     //this.Stamen_Toner.addTo(this.mymap);
 
     console.log(this.mymap);
@@ -183,38 +199,42 @@ export class MainController {
         for(var commute of this.commuting){
           this.drawCommute(commute);
         }
-
+        
         
 
-
+        
       
 
       /*
-      var line = generateGradientCurve([[25.104875594635896, 55.1872444152832],[25.104875594635896, 55.25693893432617],[25.066630150515678, 55.25693893432617], [25.066630150515678, 55.1872444152832],[25.104875594635896, 55.1872444152832]]);
+      var line = this.generateGradientCurve([[25.104875594635896, 55.1872444152832],[25.104875594635896, 55.25693893432617],[25.066630150515678, 55.25693893432617], [25.066630150515678, 55.1872444152832],[25.104875594635896, 55.1872444152832]]);
       line.addTo(this.mymap);
       */
+      
       /*
-      var arc1 = generateGradientCurve([[25.104875594635896, 55.1872444152832],[25.104875594635896, 55.25693893432617]]);
+      
+      var arc1 = this.generateGradientCurve([[25.104875594635896, 55.1872444152832],[25.104875594635896, 55.25693893432617]]);
       arc1.addTo(this.mymap);
       
-      var arc2 = generateGradientCurve([[25.104875594635896, 55.25693893432617], [25.066630150515678, 55.25693893432617]]);
+      var arc2 = this.generateGradientCurve([[25.104875594635896, 55.25693893432617], [25.066630150515678, 55.25693893432617]]);
       arc2.addTo(this.mymap);
-      var arc2_2 = generateGradientCurve([[25.104875594635895, 55.26002883911133], [25.066630150515678, 55.25693893432617]]);
+      
+      
+      var arc2_2 = this.generateGradientCurve([[25.104875594635895, 55.26002883911133], [25.066630150515678, 55.25693893432617]]);
       arc2_2.addTo(this.mymap);
+      
 
-
-      var arc3 = generateGradientCurve([[25.066630150515678, 55.25693893432617], [25.066630150515678, 55.1872444152832]]);
+      var arc3 = this.generateGradientCurve([[25.066630150515678, 55.25693893432617], [25.066630150515678, 55.1872444152832]]);
       arc3.addTo(this.mymap);
 
-      var arc4 = generateGradientCurve([[25.066630150515678, 55.1872444152832], [25.104875594635896, 55.1872444152832]]);
+      var arc4 = this.generateGradientCurve([[25.066630150515678, 55.1872444152832], [25.104875594635896, 55.1872444152832]]);
       arc4.addTo(this.mymap);
-      /*
-      var arc5 = generateGradientCurve([[25.104875594635896, 55.1872444152832], [25.066630150515678, 55.25693893432617]]);
+      
+      var arc5 = this.generateGradientCurve([[25.104875594635896, 55.1872444152832], [25.066630150515678, 55.25693893432617]]);
       arc5.addTo(this.mymap);
       
-      var arc6 = generateGradientCurve([[25.104875594635896, 55.25693893432617], [25.066630150515678, 55.1872444152832]]);
+      var arc6 = this.generateGradientCurve([[25.066630150515678, 55.1872444152832], [25.104875594635896, 55.25693893432617]]);
       arc6.addTo(this.mymap);
-      */
+        */
  
       /*
       var arc7 = generateGradientCurve([[25.10394292113994, 55.190935134887695 ], [25.0958594528971, 55.2077579498291] ]);
@@ -225,6 +245,73 @@ export class MainController {
         //this.drawCommute(this.commuting[3]);
 
       });
+  }
+
+  generateGradientCurve(coords, curveWeigth){
+    var coords1InPixels = this.mymap.latLngToLayerPoint(coords[0]);
+
+    var x1 =  coords[0][1] < coords[1][1] ? 0 : 1;
+    var y1 =  coords[0][0] < coords[1][0] ? 1 : 0;
+
+    var coords2InPixels = this.mymap.latLngToLayerPoint(coords[1]);
+    var x2 =  coords[0][1] < coords[1][1] ? 1 : 0;
+    var y2 =  coords[0][0] < coords[1][0] ? 0 : 1;
+    
+
+    // vertical 
+    if(coords[0][1] === coords[1][1]){
+      x1 = 0;
+      x2 = 0;
+    //horizontal
+    } else if(coords[0][0] === coords[1][0])  {
+      y1 = 0;
+      y2 = 0;
+    }
+
+
+    console.log('generateGradientCurve', x1, x2, y1, y2);
+    console.log('canvas coords', coords1InPixels, coords2InPixels);
+
+
+    //control point
+    var segmentFunction = new L.LinearFunction(coords[0], coords[1]);
+    var offset1 = segmentFunction.getPointAtPercent(0.5);
+    console.log('offset:', offset1);
+
+
+    var auxLineOptions = {color: 'green', weight: curveWeigth || 10};
+    var auxLine = new L.ArcedPolyline(coords, auxLineOptions);
+    
+
+    var arcOptions = {
+      //distanceToHeight: new L.LinearFunction([0, 0], [4000, 400]),
+      color: 'green',
+      weight: curveWeigth || 10,
+      opacity: 1,
+     
+      gradient: {
+        vector: [[x1, y1] , [x2, y2]],
+        //vector: [['0%', '0%'], ['100%', '100%']],
+        //vector: [[centroid1.getBounds().getNorthWest(), centroid2.getBounds().getNorthWest()]],
+        stops: [{
+            offset: '0%',
+            style: { color: SourceColor, opacity: 1}
+          }, {
+            offset: '20%',
+            style: { color: '#FFF', opacity: 0.09 }
+          }, {
+            offset: '80%',
+            style: { color: '#FFF', opacity: 0.09 }
+          }, {
+            offset: '100%',
+            style: { color: TargetColor, opacity: 1 }
+        }]}
+      };
+
+
+      var arc = new L.ArcedPolyline(coords, arcOptions);
+    return arc;
+
   }
 
   getGeometry(commute, homeOrWork){
@@ -279,84 +366,8 @@ export class MainController {
     var journeyWeigth = ((journeys - sourceFile.min) * rescaleFactor) + minJourneyWeigth;
     //console.log('journeyWeigth: ',journeys, journeyWeigth);
 
-    var inverseColor = centroid1.getBounds().getNorthWest();
-
-    var x1 = coords[0][0];
-    var x2 = coords[1][0];
-    var y1 = coords[0][1];
-    var y2 = coords[1][1];
-
-    var arcOptions = {
-      //distanceToHeight: new L.LinearFunction([0, 0], [4000, 400]),
-      color: '#FFF',
-      weight: journeyWeigth,
-      opacity: 0.1,
-      smoothFactor: 1,
-      gradient: {
-        vector: [[x1, y1], [x2, y2]],
-        //vector: [[centroid1.getBounds().getNorthWest(), centroid2.getBounds().getNorthWest()]],
-        stops: [{
-            offset: '0%',
-            style: { color: SourceColor, opacity: 1}
-          }, {
-            offset: '20%',
-            style: { color: '#FFF', opacity: 0.09 }
-          }, {
-            offset: '80%',
-            style: { color: '#FFF', opacity: 0.09 }
-          }, {
-            offset: '100%',
-            style: { color: TargetColor, opacity: 1 }
-      }]}};
-
-
-
-    var arcedPolyline = new L.ArcedPolyline(coords, //[[25.2726093, 55.3000877],[25.1380933, 55.1943535]],
-      arcOptions);
+    var arcedPolyline = this.generateGradientCurve(coords, journeyWeigth);
     arcedPolyline.addTo(this.mymap);
-
-
-
-
-
-    /*
-    var arcedPolyline = new L.ArcedPolyline(coords, //[[25.2726093, 55.3000877],[25.1380933, 55.1943535]],
-      {
-        //distanceToHeight: new L.LinearFunction([0, 0], [4000, 400]),
-        color: TargetColor,
-        weight: journeyWeigth,
-        opacity: 0.08,
-        smoothFactor: 1,
-        gradient: {
-          vector: [['0%', '50%'], ['100%', '50%']],
-          stops: [{
-              offset: '0%',
-              style: { color: SourceColor, opacity: 1, weight: journeyWeigth }
-            }, {
-              offset: '20%',
-              style: { color: '#FFF', opacity: 0.4, weight: journeyWeigth * 0.75 }
-            }, {
-              offset: '80%',
-              style: { color: TargetColor, opacity: 1, weight: journeyWeigth }
-            }
-        ]
-      }
-
-      });
-
-    */
-    //console.log('arcedPolyline:', arcedPolyline);
-
-    /*
-    var journey = L.hotline([
-      [centroid1.getBounds().getNorthWest().lat, centroid1.getBounds().getNorthWest().lng, 0],
-      [centroid2.getBounds().getNorthWest().lat, centroid2.getBounds().getNorthWest().lng, 1]],{
-        weight: 2,
-        outlineWidth: 0,
-        palette: { 0.0: SourceColor, 0.3: '#FFF', 0.7: '#FFF', 1.0: TargetColor}
-    });
-    */
-    //journey.addTo(this.mymap);
 
 
 
