@@ -1,0 +1,93 @@
+.thing-form {
+  margin: 20px 0;
+}
+
+#banner {
+  border-bottom: none;
+  margin-top: -20px;
+}
+
+#banner h1 {
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+#logoLayer { 
+  
+}
+
+.hero-unit {
+  position: relative;
+  text-align: center;
+  background: #09c;
+}
+
+.navbar-text {
+  margin-left: 15px;
+}
+
+.cls-1 {
+  fill: #fff;
+}
+
+html|* > svg {
+  transform-origin: 50% 50% 0px;
+}
+
+#mapid { 
+  height: 1000px; 
+  -webkit-transform: rotateX(-45deg);
+  transform:rotateX(-45deg);
+  margin: 0px;
+  //overflow:visible;
+}
+
+/*
+#mapid { 
+  overflow: visible;
+} 
+*/
+
+.leaflet-container {
+  background: none;
+}
+
+
+/* set up our 3D space */
+
+#mapid {
+  -webkit-transform-style:preserve-3d;
+  transform-style:preserve-3d;
+  //z-index: -100;
+}
+
+
+#mapid * {
+  -webkit-transform-style:preserve-3d;
+  transform-style:preserve-3d;
+  z-index: -100;
+}
+
+
+/* Optional: this will help you see what's going on as we build the tilted view, but can be removed */
+.marker {
+  -webkit-transform:translateZ(-1000px);
+  transform:translateZ(10px);
+  //transform:rotateX(90deg);
+}
+
+
+#mapcontainer {
+  perspective:1200;
+  padding: 0;
+  position: relative;
+  top: -100px;
+}
+
+/* 
+// opposite colours
+.leaflet-tile {
+    -webkit-filter: hue-rotate(180deg) invert(100%);
+}
+*/

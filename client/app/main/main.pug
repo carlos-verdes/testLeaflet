@@ -1,0 +1,19 @@
+header#banner.hero-unit
+  .container
+    svg#logoLayer(width='10%', height='10%', data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512')
+      defs
+        style
+          | .cls-1{fill:#fff;}
+      title
+        Artboard 1
+      path.cls-1(d='M125.83,292.5A50.94,50.94,0,1,0,176.77,242a50.65,50.65,0,0,0-50.94,50.52m342.6,0c0,65.89-53.85,119.23-120.27,119.23a120.65,120.65,0,0,1-85.7-35.52,120.54,120.54,0,0,1-85.68,35.52c-66.48,0-120.25-53.37-120.25-119.26s53.77-119.25,120.25-119.25a119.83,119.83,0,0,1,50.94,11.22V128.09a34.64,34.64,0,0,1,69.28,0V292.53c0,27.92,23,50.45,51.16,50.45a50.7,50.7,0,0,0,51-50.45V248.87a34.64,34.64,0,0,1,69.28,0Z')
+
+.container
+  .row
+    
+  .row
+    //.col-lg-1
+      input(type="text", ng-model="journeyIndex", style="width:50px;", ng-change="drawCurrentCommute()")
+
+    .col-lg-12#mapcontainer
+      #mapid
