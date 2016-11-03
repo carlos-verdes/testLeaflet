@@ -24,12 +24,13 @@ import util from '../components/util/util.module';
 import './app.scss';
 
 //leaflet
-import leaflet from 'leaflet'
-import 'leaflet/dist/leaflet.css'
-import leafletDvf from 'leaflet-dvf'
-import leafletHotline from 'leaflet-hotline'
+import leaflet from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import leafletDvf from 'leaflet-dvf';
+import leafletHotline from 'leaflet-hotline';
 
-
+//bezier
+import bezier from 'bezier';
 
 angular.module('testLeafletApp', [ngCookies, ngResource, ngSanitize, uiRouter, uiBootstrap, navbar,
   footer, main, constants, util
