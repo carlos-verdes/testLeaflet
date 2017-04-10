@@ -34,8 +34,7 @@ import bezier from 'bezier';
 
 angular.module('testLeafletApp', [ngCookies, ngResource, ngSanitize, uiRouter, uiBootstrap, navbar,
   footer, main, constants, util
-])
-  .config(routeConfig);
+]).config(routeConfig);
 
 angular.element(document)
   .ready(() => {

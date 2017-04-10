@@ -61,8 +61,9 @@ var sourceEmpty = {
   count: 0,
   min: 0,
   max: 100
-}
+};
 
+// source
 var sourceFile = sourceMoreThan50;
 
 var minJourneyWeigth = 1;
@@ -71,9 +72,9 @@ var maxJourneyWeigth = 40;
 var showZones = false;
 var showTest = false;
 
-var AbuDabhiBounds = [[24.619602, 54.153324],[24.259533, 54.830351]]
-var DubaiBounds = [[25.314461, 55.042603],[24.983172, 55.567200]];
-var ZoomBounds = [[25.297297, 54.861121],[25.227127, 54.923606]];
+var AbuDabhiBounds = [[24.619602, 54.153324], [24.259533, 54.830351]];
+var DubaiBounds = [[25.314461, 55.042603], [24.983172, 55.567200]];
+var ZoomBounds = [[25.297297, 54.861121], [25.227127, 54.923606]];
 
 var TestBounds = [[25.104875594635896, 55.1872444152832], [25.066630150515678, 55.25693893432617]];
 
@@ -93,10 +94,10 @@ L.GradientArcedPolyline.include({
   /*onAdd: function () {
     console.log('on add gradient layer');
     //L.ArcedPolyline.prototype.onAdd.call();
-  } */ 
+  } */
   redraw: function() {
-    console.log('redrawing gradient, points', this._points);
-    console.log('redrawing gradient', this._gradient);
+    //console.log('redrawing gradient', this._points);
+    //console.log('redrawing gradient', this._gradient);
     var point1 = this._points[0];
     var point2 = this._points[1];
     this._gradient.setAttribute('x1', point1.x);
@@ -225,9 +226,9 @@ export class MainController {
         this.awesomeThings = response.data;
       });
 
-    var uri = '/assets/'+sourceFile.file;
+    var uri = './assets/'+sourceFile.file;
   
-    console.log('loading commuting');
+    //console.log('loading commuting');
     this.$http({'url': uri, 'method': 'get', 'timeout': 99999})
       .then(response => {
 
@@ -241,18 +242,18 @@ export class MainController {
       
 
 
-      console.log('commuting query response', response);
+      //console.log('commuting query response', response);
       this.commuting = response.data;
-      console.log('commuting loaded', this.commuting.length);
+      //console.log('commuting loaded', this.commuting.length);
 
       var _this = this;
 
       
       function redrawGradients(){
-        console.log('view changed');
+        //console.log('view changed');
         for(var i = 0, len = _this.gradientLayers.length; i< len; i++){
           var layer = _this.gradientLayers[i];
-          console.log('redrawing gradientLayers', layer);
+          //console.log('redrawing gradientLayers', layer);
           layer.redraw();
         }
       }
@@ -311,7 +312,7 @@ export class MainController {
 
     var point1 = this.mymap.latLngToLayerPoint(coords[0]);
     var point2 = this.mymap.latLngToLayerPoint(coords[1]);
-    console.log('canvas coords', point1, point2);
+    //console.log('canvas coords', point1, point2);
 
     var inverseAxisX = point1.x < point2.x;
     var inverseAxisY = point1.y < point2.y;
@@ -335,7 +336,7 @@ export class MainController {
     var distanceToHeight = new L.LinearFunction([0, 5], [1000, 200]);
 
     var heigthOffset = distanceToHeight.evaluate(distance);
-    console.log('heigthOffset', heigthOffset);
+    //console.log('heigthOffset', heigthOffset);
 
     var controlPoint1 = L.point(point1.x, point1.y - heigthOffset);
     var controlPoint2 = L.point(point2.x, point2.y - heigthOffset);
@@ -347,7 +348,7 @@ export class MainController {
     var controlPoint1Y = (new L.LinearFunction({x:0, y:0},{x:yDistance, y:1})).evaluate(bezierPoint1y - point1.y);
 
     var coordsGradient1 = [[x1, y1] , [x2, y2]];
-    console.log('coordsGradient1: ' + coordsGradient1);
+    //console.log('coordsGradient1: ' + coordsGradient1);
 
     //test line
     //(new L.Polyline([coords[0], this.mymap.layerPointToLatLng(L.point(bezierPoint1x, bezierPoint1y))], {color: 'yellow', weight:5 })).addTo(this.mymap);
