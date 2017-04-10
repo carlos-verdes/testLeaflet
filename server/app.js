@@ -11,11 +11,13 @@ import config from './config/environment';
 import http from 'http';
 
 // Connect to MongoDB
+/* commentMongo
 mongoose.connect(config.mongo.uri, config.mongo.options);
 mongoose.connection.on('error', function(err) {
   console.error(`MongoDB connection error: ${err}`);
   process.exit(-1); // eslint-disable-line no-process-exit
 });
+commentMongo */
 
 // Populate databases with sample data
 if(config.seedDB) {
